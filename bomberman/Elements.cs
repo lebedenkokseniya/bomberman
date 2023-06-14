@@ -1,7 +1,4 @@
-﻿using System;
-using System.Numerics;
-
-public class Element
+ public class Element
 {
     public int x;
     public int y;
@@ -80,7 +77,8 @@ public class Bomb : Element
         Symbol = '@';
         CanDo = false;
     }
-    public new void Action(Field field, int y, int x, ConsoleKeyInfo inputedKey, State state)
+
+    public async Task Action(Field field, int y, int x, ConsoleKeyInfo inputedKey, State state)
     {
         BlastWave blastWave = new BlastWave();
         switch (inputedKey.KeyChar)
@@ -128,6 +126,7 @@ public class BlastWave : Element
         Symbol = '.';
         CanDo = false;
     }
+
     bool thereIsABlastWave(Field field, int y, int x)
     {
         if (field.Map[y, x] is Empty || field.Map[y, x].Destroyable)
@@ -136,7 +135,8 @@ public class BlastWave : Element
         }
         return false;
     }
-    public async new Task Action(Field field, int y, int x, State state)
+
+    public async Task Action(Field field, int y, int x, State state)
     {
         await Task.Delay(1300);
         field.Map[y, x] = new Empty();
@@ -216,6 +216,7 @@ public class ConcreteWall : Wall
     {
         Symbol = '0';
         CanDo = false;
+        Destroyable = false;
     }
 }
 
